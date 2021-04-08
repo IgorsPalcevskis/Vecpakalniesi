@@ -44,10 +44,13 @@ public class PlayerControls : MonoBehaviour
     {
         controller = gameObject.GetComponent<CharacterController>();
         cameraMainTransform = Camera.main.transform;
+        Cursor.visible = false;
     }
 
     void Update()
     {
+        //if (PauseManager.paused) return;
+
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
