@@ -131,7 +131,7 @@ Shader "Skybox Gradient"
 			ENDCG
 		}
 	}
-	CustomEditor "ASEMaterialInspector"
+	//CustomEditor "ASEMaterialInspector"
 	
 	
 }
