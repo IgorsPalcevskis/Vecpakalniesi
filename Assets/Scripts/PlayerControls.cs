@@ -21,15 +21,23 @@ public class PlayerControls : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform cameraMainTransform;
+    private Animator animator;
 
-    private void OnEnable() {
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
+    private void OnEnable()
+    {
         movementControl.action.Enable();
         jumpControl.action.Enable();
     }
 
-    private void OnDisable() {
+    private void OnDisable()
+    {
         movementControl.action.Disable();
-        jumpControl.action.Disable();        
+        jumpControl.action.Disable();
     }
 
     private void Start()
@@ -56,6 +64,7 @@ public class PlayerControls : MonoBehaviour
         if (jumpControl.action.triggered && groundedPlayer)
         {
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            animator.SetTrigger("Jump");
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
@@ -66,6 +75,15 @@ public class PlayerControls : MonoBehaviour
             float targetAngle = Mathf.Atan2(movement.x, movement.y) * Mathf.Rad2Deg + cameraMainTransform.eulerAngles.y;
             Quaternion rotation = Quaternion.Euler(0f, targetAngle, 0f);
             transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+        }
+        // Run animation
+        if (movement != Vector2.zero)
+        {
+            animator.SetBool("Run", true);
+        }
+        else
+        {
+            animator.SetBool("Run", false);
         }
     }
 }
